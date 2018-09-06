@@ -2,7 +2,7 @@
 
 This is a document
 
-##Subtitle
+## Subtitle
 
 This is a section **including the following**
 
