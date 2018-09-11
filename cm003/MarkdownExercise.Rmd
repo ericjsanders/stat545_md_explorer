@@ -1,0 +1,48 @@
+---
+title: "Stat545 In-Class Activity"
+author: "Eric Sanders"
+date: 'Created 2018-09-11'
+header-includes:
+   - \usepackage{bbm}
+   - \usepackage{amsmath}
+   - \usepackage{amsfonts}
+   - \usepackage{amssymb}
+   - \usepackage{caption}
+   - \usepackage{tikz}
+   - \usepackage{textcomp}
+   - \usepackage{float}
+   - \usepackage{setspace}
+   - \doublespacing
+   - \allowdisplaybreaks
+   - \pagenumbering{roman}
+output: 
+  html_document:
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+```
+
+# An exercise in R Markdown
+
+Here is an equation!
+
+$$ \alpha = \beta-5 $$
+
+How about we do it inline, and I just say $\alpha=\beta-5$.
+
+## Looking at Code
+
+Let's summarise 'cars' without showing the code.
+
+```{r, echo=FALSE}
+summary(cars)
+```
+
+And now let's look at a plot of pressure!
+
+```{r}
+plot(pressure)
+```
