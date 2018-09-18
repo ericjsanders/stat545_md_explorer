@@ -339,6 +339,22 @@ library(gapminder)</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Of those, only take data from Asia.</li>
 </ol>
+<pre class="r"><code>gapminder %&gt;%
+  filter(pop &gt; 100000000,continent=='Asia')</code></pre>
+<pre><code>## # A tibble: 52 x 6
+##    country    continent  year lifeExp       pop gdpPercap
+##    &lt;fct&gt;      &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;
+##  1 Bangladesh Asia       1987    52.8 103764241      752.
+##  2 Bangladesh Asia       1992    56.0 113704579      838.
+##  3 Bangladesh Asia       1997    59.4 123315288      973.
+##  4 Bangladesh Asia       2002    62.0 135656790     1136.
+##  5 Bangladesh Asia       2007    64.1 150448339     1391.
+##  6 China      Asia       1952    44   556263527      400.
+##  7 China      Asia       1957    50.5 637408000      576.
+##  8 China      Asia       1962    44.5 665770000      488.
+##  9 China      Asia       1967    58.4 754550000      613.
+## 10 China      Asia       1972    63.1 862030000      677.
+## # ... with 42 more rows</code></pre>
 </div>
 <div id="git-stuff-optional" class="section level2">
 <h2>git stuff (Optional)</h2>
@@ -365,10 +381,62 @@ if (my_commute &gt; 30) {
 <div id="relationalcomparison-and-logical-operators-in-r" class="section level1">
 <h1>Relational/Comparison and Logical Operators in R</h1>
 <ol style="list-style-type: decimal">
-<li><p>Find all entries of Canada and Algeria occuring in the ’60s.</p></li>
-<li>Find all entries of Canada, and entries of Algeria occuring in the ’60s.</li>
-<li><p>Find all entries <em>not</em> including Canada and Algeria.</p></li>
+<li>Find all entries of Canada and Algeria occuring in the ’60s.</li>
 </ol>
+<pre class="r"><code>gapminder %&gt;% 
+  filter((country==&quot;Canada&quot;|country=='Algeria') &amp; year&gt;=1960 &amp; year&lt;1970)</code></pre>
+<pre><code>## # A tibble: 4 x 6
+##   country continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Algeria Africa     1962    48.3 11000948     2551.
+## 2 Algeria Africa     1967    51.4 12760499     3247.
+## 3 Canada  Americas   1962    71.3 18985849    13462.
+## 4 Canada  Americas   1967    72.1 20819767    16077.</code></pre>
+<pre class="r"><code>gapminder %&gt;% 
+  filter(country %in% c('Canada','Algeria'), year&gt;=1960, year&lt;1970)</code></pre>
+<pre><code>## # A tibble: 4 x 6
+##   country continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Algeria Africa     1962    48.3 11000948     2551.
+## 2 Algeria Africa     1967    51.4 12760499     3247.
+## 3 Canada  Americas   1962    71.3 18985849    13462.
+## 4 Canada  Americas   1967    72.1 20819767    16077.</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Find all entries of Canada, and entries of Algeria occuring in the ’60s.</li>
+</ol>
+<pre class="r"><code>gapminder %&gt;% 
+  filter(country=='Canada', year&gt;=1960, year&lt;1970)</code></pre>
+<pre><code>## # A tibble: 2 x 6
+##   country continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Canada  Americas   1962    71.3 18985849    13462.
+## 2 Canada  Americas   1967    72.1 20819767    16077.</code></pre>
+<pre class="r"><code>gapminder %&gt;% 
+  filter(country=='Algeria', year&gt;=1960, year&lt;1970)</code></pre>
+<pre><code>## # A tibble: 2 x 6
+##   country continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Algeria Africa     1962    48.3 11000948     2551.
+## 2 Algeria Africa     1967    51.4 12760499     3247.</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Find all entries <em>not</em> including Canada and Algeria.</li>
+</ol>
+<pre class="r"><code>gapminder %&gt;% 
+  filter(!(country %in% c('Canada','Algeria')))</code></pre>
+<pre><code>## # A tibble: 1,680 x 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.
+##  6 Afghanistan Asia       1977    38.4 14880372      786.
+##  7 Afghanistan Asia       1982    39.9 12881816      978.
+##  8 Afghanistan Asia       1987    40.8 13867957      852.
+##  9 Afghanistan Asia       1992    41.7 16317921      649.
+## 10 Afghanistan Asia       1997    41.8 22227415      635.
+## # ... with 1,670 more rows</code></pre>
 </div>
 <div id="bonus-exercises" class="section level1">
 <h1>Bonus Exercises</h1>
