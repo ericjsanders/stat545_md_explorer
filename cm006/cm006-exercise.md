@@ -59,7 +59,7 @@ Notice the "metaprogramming" again!
     -   Note: `ggplot2` does some data wrangling and computations itself! We don't always have to modify the data frame.
 
 ``` r
-ggplot(gapminder,aes(x=lifeExp,y=log(gdpPercap)))+geom_point()
+ggplot(gapminder,aes(x=lifeExp,y=log(gdpPercap)))+geom_point(color='orange')
 ```
 
 ![](cm006-exercise_files/figure-markdown_github/unnamed-chunk-5-1.png)
@@ -68,7 +68,7 @@ ggplot(gapminder,aes(x=lifeExp,y=log(gdpPercap)))+geom_point()
 
 ``` r
 ggplot(gapminder,aes(lifeExp,gdpPercap))+
-  geom_point()+
+  geom_point(color='purple')+
   scale_y_log10()
 ```
 
@@ -78,7 +78,7 @@ ggplot(gapminder,aes(lifeExp,gdpPercap))+
 
 ``` r
 ggplot(gapminder)+
-  geom_point(aes(lifeExp,gdpPercap))+
+  geom_point(aes(lifeExp,gdpPercap),color='green')+
   scale_y_log10()
 ```
 
@@ -101,18 +101,42 @@ Let's build a histogram of life expectancy.
 | Grammar Component     | Specification |
 |-----------------------|---------------|
 | **data**              | `gapminder`   |
-| **aesthetic mapping** |               |
-| **geometric object**  |               |
-| scale                 |               |
-| statistical transform |               |
+| **aesthetic mapping** | `x`           |
+| **geometric object**  | histogram     |
+| scale                 | linear        |
+| statistical transform | none          |
 
 1.  Build the histogram of life expectancy.
 
-2.  Change the number of bins to 50.
+``` r
+ggplot(gapminder,aes(x=lifeExp))+
+  geom_histogram(fill='blue')
+```
 
-3.  Instead of a histogram, let's create a kernel density plot.
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
-4.  Optional: git stage and commit
+![](cm006-exercise_files/figure-markdown_github/unnamed-chunk-8-1.png)
+
+1.  Change the number of bins to 50.
+
+``` r
+ggplot(gapminder,aes(x=lifeExp,y=..density..))+
+  geom_histogram(fill='green',bins=50)
+```
+
+![](cm006-exercise_files/figure-markdown_github/unnamed-chunk-9-1.png)
+
+1.  Instead of a histogram, let's create a kernel density plot.
+
+``` r
+ggplot(gapminder,aes(x=lifeExp,y=..density..))+
+  geom_histogram(fill='orange',bins=50)+
+  geom_density(bw=1.5)
+```
+
+![](cm006-exercise_files/figure-markdown_github/unnamed-chunk-10-1.png)
+
+1.  Optional: git stage and commit
 
 **Uses of a histogram**: Explore the distribution of a single numeric variable.
 
@@ -123,21 +147,39 @@ Let's make *box plots* of population for each continent. Note: y-axis is much be
 
 1.  Fill out the grammar components below. Again, bold *must* be specified to make a `ggplot2` plot.
 
-| Grammar Component     | Specification |
-|-----------------------|---------------|
-| **data**              | `gapminder`   |
-| **aesthetic mapping** |               |
-| **geometric object**  |               |
-| scale                 |               |
-| statistical transform |               |
+| Grammar Component     | Specification    |
+|-----------------------|------------------|
+| **data**              | `gapminder`      |
+| **aesthetic mapping** | `x` and `y`      |
+| **geometric object**  | boxplot          |
+| scale                 | log-y            |
+| statistical transform | 5-number summary |
 
 1.  Initiate the `ggplot` call, with the log y scale, and store it in the variable `a`. Print out `a`.
 
-2.  Add the boxplot geom to `a`.
+``` r
+a = ggplot(gapminder,aes(x=continent,y=pop,fill=continent))+
+  scale_y_log10()
+```
 
-3.  A violin plot is a kernel density on its side, made symmetric. Add that geom to `a`.
+1.  Add the boxplot geom to `a`.
+
+``` r
+a+geom_boxplot()
+```
+
+![](cm006-exercise_files/figure-markdown_github/unnamed-chunk-12-1.png)
+
+1.  A violin plot is a kernel density on its side, made symmetric. Add that geom to `a`.
     -   What's better here, boxplots or violin plots? Why?
-4.  Optional: git stage and commit
+
+``` r
+a+geom_violin()
+```
+
+![](cm006-exercise_files/figure-markdown_github/unnamed-chunk-13-1.png)
+
+1.  Optional: git stage and commit
 
 **Use of boxplot**: Visualize 1-dimensional distributions (of a single numeric variable).
 
