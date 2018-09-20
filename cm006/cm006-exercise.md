@@ -158,14 +158,14 @@ Let's make *box plots* of population for each continent. Note: y-axis is much be
 1.  Initiate the `ggplot` call, with the log y scale, and store it in the variable `a`. Print out `a`.
 
 ``` r
-a = ggplot(gapminder,aes(x=continent,y=pop,fill=continent))+
+a = ggplot(gapminder,aes(x=continent,y=pop))+
   scale_y_log10()
 ```
 
 1.  Add the boxplot geom to `a`.
 
 ``` r
-a+geom_boxplot()
+a+geom_boxplot(aes(fill=continent))
 ```
 
 ![](cm006-exercise_files/figure-markdown_github/unnamed-chunk-12-1.png)
@@ -174,7 +174,7 @@ a+geom_boxplot()
     -   What's better here, boxplots or violin plots? Why?
 
 ``` r
-a+geom_violin()
+a+geom_violin(aes(fill=continent))
 ```
 
 ![](cm006-exercise_files/figure-markdown_github/unnamed-chunk-13-1.png)
@@ -192,15 +192,34 @@ Let's hold off on identifying the grammar.
 
 1.  Initiate the `ggplot` call to make a scatterplot of `continent` vs `pop`; initiate the log y scale. Store the call in the variable `b`.
 
-2.  Add the point geom to `b`. Why is this an ineffective plot?
+``` r
+a+geom_point(alpha=0.1)
+```
 
-3.  A solution is to jitter the points. Add the jitter geom. Re-run the command a few times -- does the plot change? Why?
+![](cm006-exercise_files/figure-markdown_github/unnamed-chunk-14-1.png)
 
-4.  How does the grammar differ from a box plot or violin plot?
+1.  Add the point geom to `b`. Why is this an ineffective plot?
+
+``` r
+a+geom_jitter(alpha=0.5)
+```
+
+![](cm006-exercise_files/figure-markdown_github/unnamed-chunk-15-1.png)
+
+1.  A solution is to jitter the points. Add the jitter geom. Re-run the command a few times -- does the plot change? Why?
+
+2.  How does the grammar differ from a box plot or violin plot?
     -   ANSWER:
-5.  We can add multiple geom *layers* to our plot. Put a jitterplot overtop of the violin plot, starting with our base `b`. Try vice-versa.
+3.  We can add multiple geom *layers* to our plot. Put a jitterplot overtop of the violin plot, starting with our base `b`. Try vice-versa.
 
-6.  Optional: git stage and commit
+``` r
+a+geom_violin(aes(fill=continent))+
+  geom_jitter(alpha=0.1)
+```
+
+![](cm006-exercise_files/figure-markdown_github/unnamed-chunk-16-1.png)
+
+1.  Optional: git stage and commit
 
 **Uses of jitterplot**: Visualize 1-dimensional distributions, AND get a sense of the sample size.
 
@@ -224,11 +243,39 @@ Let's make some time/line plot, starting with Canada's life expectancy over time
     2.  Pipes the filtered data into `ggplot`
     3.  Makes the time plot of `lifeExp` over time
     4.  Also displays the points
-2.  Attempt to overlay line plots for all countries. That is, repeat the above code, but don't filter. What's wrong here?
 
-3.  Use the `group` aesthetic to fix the problem.
+``` r
+gapminder %>%
+  filter(country=="Canada") %>%
+  ggplot(aes(x=year,y=lifeExp)) +
+  geom_line()+
+  geom_point()
+```
 
-4.  Optional: git stage and commit
+![](cm006-exercise_files/figure-markdown_github/unnamed-chunk-17-1.png)
+
+1.  Attempt to overlay line plots for all countries. That is, repeat the above code, but don't filter. What's wrong here?
+
+``` r
+ggplot(gapminder,aes(x=year,y=lifeExp)) +
+  geom_line()+
+  geom_point()
+```
+
+![](cm006-exercise_files/figure-markdown_github/unnamed-chunk-18-1.png)
+
+1.  Use the `group` aesthetic to fix the problem.
+
+``` r
+ggplot(gapminder,aes(x=year,y=lifeExp,color=country)) +
+  geom_line()+
+  geom_point()+
+  theme(legend.position='none')
+```
+
+![](cm006-exercise_files/figure-markdown_github/unnamed-chunk-19-1.png)
+
+1.  Optional: git stage and commit
 
 **Uses of time/line plots**: Visualize trends of a numeric variable over time.
 
